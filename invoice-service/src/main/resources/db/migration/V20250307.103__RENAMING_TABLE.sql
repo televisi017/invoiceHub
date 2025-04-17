@@ -1,0 +1,1 @@
+RENAME TABLE INVOICE TO invoice;

@@ -1,0 +1,102 @@
+spring:
+  application:
+    name: api-gateway
+
+  main:
+    allow-bean-definition-overriding: true
+
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/retail
+
+  cloud:
+    gateway:
+
+      httpclient:
+        response-timeout: 15s
+
+      routes:
+        - id: user-service-route
+          uri: http://localhost:7001
+          predicates:
+            - Path=/user-service/**
+          filters:
+            - RewritePath=/user-service/?(?<segment>.*), /v1/users/$\{segment}
+            - name: CircuitBreaker
+              args:
+                name: userServiceCircuitBreaker
+                fallbackUri: forward:/fallback
+                statusCodes:
+                  - 500
+                  - 502
+                  - 503
+
+        - id: invoice-service-route
+          uri: http://localhost:7002
+          predicates:
+            - Path=/invoice-service/**
+          filters:
+            - RewritePath=/invoice-service/?(?<segment>.*), /v1/invoices/$\{segment}
+            - name: CircuitBreaker
+              args:
+                name: invoiceServiceCircuitBreaker
+                fallbackUri: forward:/fallback
+                statusCodes:
+                  - 500
+                  - 502
+                  - 503
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      userServiceCircuitBreaker:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        permittedNumberOfCallsInHalfOpenState: 5
+        waitDurationInOpenState: 10000
+        timeoutDuration: 15s
+
+      invoiceServiceCircuitBreaker:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        failureRateThreshold: 50
+        permittedNumberOfCallsInHalfOpenState: 5
+        waitDurationInOpenState: 10000
+
+  timelimiter:
+    instances:
+      userServiceCircuitBreaker:
+        timeoutDuration: 15s
+        cancelRunningFuture: true
+
+management:
+  tracing:
+    propagation:
+      consume: W3C
+
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+
+
+security:
+  jwt: http://localhost:8080/realms/retail/protocol/openid-connect/certs
+
+server:
+  port: 6500
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+logstash:
+  host: localhost
+  port: 50000

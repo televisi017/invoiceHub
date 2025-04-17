@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <springProperty scope="context" name="appName" source="spring.application.name"/>
+    <springProperty scope = "context" name = "logHost" source = "logstash.host"/>
+    <springProperty scope = "context" name = "logPort" source = "logstash.port"/>
+
+    <!--logstash appender-->
+    <appender name = "LOGSTASH" class ="net.logstash.logback.appender.LogstashTcpSocketAppender">
+
+        <destination>${logHost}:${logPort}</destination>
+
+        <encoder class = "net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <globalCustomFields>
+                    {
+                    "appName":"${spring.application.name}"
+                    }
+                </globalCustomFields>
+                <mdc>
+                    <includeMdcKeyName>traceId</includeMdcKeyName>
+                    <includeMdcKeyName>spanId</includeMdcKeyName>
+                </mdc>
+                <logLevel/>
+                <loggerName/>
+                <threadName/>
+                <message/>
+                <arguments/>
+                <stackTrace/>
+            </providers>
+        </encoder>
+
+        <reconnectionDelay>10000</reconnectionDelay>
+    </appender>
+
+    <!--console appender-->
+    <appender name = "CONSOLE" class = "ch.qos.logback.core.ConsoleAppender">
+
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+
+            <providers>
+
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+
+                <globalCustomFields>{"service":"${spring.application.name}"}</globalCustomFields>
+                <mdc>
+                    <includeMdcKeyName>traceId</includeMdcKeyName>
+                    <includeMdcKeyName>spanId</includeMdcKeyName>
+                </mdc>
+
+                <logLevel/>
+                <loggerName/>
+                <threadName/>
+                <message/>
+                <arguments/>
+                <stackTrace/>
+            </providers>
+        </encoder>
+    </appender>
+
+    <root level = "INFO">
+        <appender-ref ref = "CONSOLE"/>
+        <appender-ref ref = "LOGSTASH"/>
+    </root>
+
+</configuration>

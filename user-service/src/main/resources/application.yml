@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: user-service
+
+  flyway:
+    enabled: true
+    default-schema: USER_DB
+    locations:
+      - classpath:db/migration
+
+  cloud:
+    openfeign:
+      client:
+        config:
+          invoice-service-feign-client:
+            connectTimeout: 5000
+            readTimeout: 3000
+
+  profiles:
+    active: local
+
+server:
+  port: 7001
+
+invoice:
+  service:
+    url: http://127.0.0.1:7002
+
+
+logstash:
+  host: localhost
+  port: 50000
+
+management:
+  tracing:
+    propagation:
+      consume: W3C

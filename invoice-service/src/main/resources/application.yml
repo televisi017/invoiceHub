@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: invoice-service
+
+  flyway:
+    enabled: true
+    default-schema: INVOICE_DB
+    locations:
+      - classpath:db/migration
+
+  profiles:
+    active: local
+
+server:
+  port: 7002
+
+logstash:
+  host: localhost
+  port: 50000
+
+management:
+  tracing:
+    propagation:
+      consume: W3C

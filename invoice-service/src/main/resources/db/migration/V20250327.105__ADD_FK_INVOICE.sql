@@ -1,0 +1,1 @@
+alter table invoice add constraint user_fk foreign key (USER_ID) references USER_DB.user(user_id);

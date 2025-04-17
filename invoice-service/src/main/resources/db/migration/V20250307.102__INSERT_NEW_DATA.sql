@@ -1,0 +1,14 @@
+INSERT INTO INVOICE (INVOICE_ID, USER_ID, INVOICE_NUMBER, PRODUCT_IDS, CREATED_TIME, UPDATED_TIME)
+VALUES
+(UUID(), 'user_001', 'INV001', 'P001,P002', NOW(), NOW()),
+(UUID(), 'user_002', 'INV002', 'P003,P004,P005', NOW(), NOW()),
+(UUID(), 'user_003', 'INV003', 'P006', NOW(), NOW()),
+(UUID(), 'user_004', 'INV004', 'P007,P008,P009,P010', NOW(), NOW()),
+(UUID(), 'user_005', 'INV005', 'P011,P012', NOW(), NOW()),
+(UUID(), 'user_006', 'INV006', 'P013,P014,P015', NOW(), NOW()),
+(UUID(), 'user_007', 'INV007', 'P016', NOW(), NOW()),
+(UUID(), 'user_008', 'INV008', 'P017,P018', NOW(), NOW()),
+(UUID(), 'user_009', 'INV009', 'P019,P020,P021,P022', NOW(), NOW()),
+(UUID(), 'user_010', 'INV010', 'P023,P024', NOW(), NOW()),
+(UUID(), 'user_011', 'INV011', 'P025,P026,P027', NOW(), NOW()),
+(UUID(), 'user_012', 'INV012', 'P028', NOW(), NOW());

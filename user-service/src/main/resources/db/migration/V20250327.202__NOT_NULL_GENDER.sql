@@ -1,0 +1,1 @@
+alter table user modify gender char(1) check(gender in ('M','F')) not null;
