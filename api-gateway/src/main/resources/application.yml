@@ -85,17 +85,11 @@ management:
     health:
       show-details: always
 
-
-
 security:
   jwt: http://localhost:8080/realms/retail/protocol/openid-connect/certs
 
 server:
   port: 6500
-
-logging:
-  level:
-    org.springframework.security: DEBUG
 
 logstash:
   host: localhost
