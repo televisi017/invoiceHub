@@ -27,6 +27,8 @@ services:
       - elasticsearch
 
   elasticsearch:
+    profiles:
+      - elk
     build:
       context: elasticsearch/
       args:
@@ -52,6 +54,8 @@ services:
     restart: unless-stopped
 
   logstash:
+    profiles:
+      - elk
     build:
       context: logstash/
       args:
@@ -74,6 +78,8 @@ services:
     restart: unless-stopped
 
   kibana:
+    profiles:
+      - elk
     build:
       context: kibana/
       args:
