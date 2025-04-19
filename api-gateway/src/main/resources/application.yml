@@ -80,7 +80,13 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: health,prometheus,circuitbreakers
+
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
   endpoint:
     health:
       show-details: always

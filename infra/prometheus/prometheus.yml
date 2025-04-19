@@ -1,0 +1,12 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'invoice-service-job'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['localhost:7002']
+  - job_name: 'user-service-job'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['localhost:7001']
