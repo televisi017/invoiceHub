@@ -100,3 +100,8 @@ server:
 logstash:
   host: localhost
   port: 50000
+
+kafka:
+  topic: product-events
+  bootstrap:
+    servers: localhost:9092,localhost:9093,localhost:9094
