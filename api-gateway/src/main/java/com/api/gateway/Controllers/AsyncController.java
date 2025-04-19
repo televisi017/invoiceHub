@@ -20,7 +20,7 @@ public class AsyncController {
 
     private final KafkaService kafkaService;
 
-    @PostMapping("")
+    @PostMapping("/products")
     public ResponseEntity<RequestStatus> sendProducts(@RequestBody ProductRequest productRequest){
 
         log.info("Product request received: {}", productRequest);
