@@ -1,0 +1,21 @@
+spring:
+
+  profiles:
+    active: local
+
+  application:
+    name: product-service
+
+  flyway:
+    enabled: true
+    default-schema: PRODUCT_DB
+    locations:
+      - classpath:db/migration
+
+  management:
+    web:
+      exposure:
+        include: health
+
+server:
+  port: 7003

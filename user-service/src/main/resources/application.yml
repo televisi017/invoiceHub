@@ -32,13 +32,16 @@ logstash:
   port: 50000
 
 management:
+
   tracing:
     propagation:
       consume: W3C
+
   endpoints:
     web:
       exposure:
         include: health,prometheus
+
   metrics:
     export:
       prometheus:
